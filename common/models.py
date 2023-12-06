@@ -25,7 +25,7 @@ class Entrada(models.Model):
 class Entradadetalle(models.Model):
     identrada = models.OneToOneField(Entrada, models.DO_NOTHING, db_column='idEntrada', primary_key=True)  # Field name made lowercase. The composite primary key (idEntrada, insumo) found, that is not supported. The first column is selected.
     insumo = models.ForeignKey('Insumo', models.DO_NOTHING, db_column='insumo', to_field='nombre_insumo')
-    cantidad = models.IntegerField()
+    cantidad = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     precio_unitario = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
 
     class Meta:
@@ -37,7 +37,7 @@ class Entradadetalle(models.Model):
 class Insumo(models.Model):
     idinsumo = models.AutoField(db_column='idInsumo', primary_key=True)  # Field name made lowercase.
     nombre_insumo = models.CharField(unique=True, max_length=80)
-    cantidad_disponible = models.IntegerField(blank=True, null=True)
+    cantidad_disponible = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     tipo_medida = models.CharField(max_length=10, blank=True, null=True)
     categoria = models.CharField(max_length=20, blank=True, null=True)
     precio_unitario = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
@@ -87,7 +87,7 @@ class Recetadetalle(models.Model):
     idrecetadetalle = models.AutoField(db_column='idRecetaDetalle', primary_key=True)
     receta = models.ForeignKey(Receta, models.DO_NOTHING, db_column='receta', to_field='nombre_receta')  # The composite primary key (receta, insumo) found, that is not supported. The first column is selected.
     insumo = models.ForeignKey(Insumo, models.DO_NOTHING, db_column='insumo', to_field='nombre_insumo')
-    cantidad = models.IntegerField()
+    cantidad = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     tipo_medida = models.CharField(max_length=10, blank=True, null=True)
     
     class Meta:
@@ -119,8 +119,7 @@ class Salida(models.Model):
 class Salidadetalle(models.Model):
     idsalida = models.OneToOneField(Salida, models.DO_NOTHING, db_column='idSalida', primary_key=True)  # Field name made lowercase. The composite primary key (idSalida, insumo) found, that is not supported. The first column is selected.
     insumo = models.ForeignKey(Insumo, models.DO_NOTHING, db_column='insumo', to_field='nombre_insumo')
-    cantidad = models.IntegerField()
-
+    cantidad = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     class Meta:
         managed = False
         db_table = 'salidadetalle'
